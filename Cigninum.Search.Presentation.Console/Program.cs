@@ -37,7 +37,7 @@ namespace Cigninum.Search.Presentation
             }
             else
             {
-                Console.Write("You have not entered texts to search");
+                Console.Write("You have not entered texts to search.");
             }
 
             Console.ReadKey();
