@@ -14,9 +14,7 @@ namespace Cigninum.Search.Presentation
         static void Main(string[] args)
         {
             // args = new[] { ".net", "java", "python", "C#", "“java script”" };
-
-            args = new[] { "djjf", "java" };
-
+         
             if (args.Length >= 1)
             {
                 Console.WriteLine("Searching....\n");
