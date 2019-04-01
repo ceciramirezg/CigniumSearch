@@ -13,27 +13,33 @@ namespace Cigninum.Search.Presentation
     {
         static void Main(string[] args)
         {
-            args = new[] { ".net", "java", "python", "C#", "“java script”" };
-           
+            // args = new[] { ".net", "java", "python", "C#", "“java script”" };
+
+            args = new[] { "djjf", "java" };
+
             if (args.Length >= 1)
             {
                 Console.WriteLine("Searching....\n");
 
                 var result = SearchAsync(args.ToList(), ConstantData.SectionConfig.SectionGroup).Result;
 
-                foreach (var item in result.SearchLanguageList)
-                {
-                    Console.WriteLine("{0}: {1}: {2}", item.Text, item.Searcher, item.Total);
-                }
-
                 Console.Write("\n");
-                foreach (var item in result.WinnerList)
+                if (result.SearchLanguageList != null)
                 {
-                    Console.WriteLine("{0} winner: {1}", item.SearcherName, item.Text);
-                }
+                    foreach (var item in result.SearchLanguageList)
+                    {
+                        Console.WriteLine("{0}: {1}: {2}", item.Text, item.Searcher, item.Total);
+                    }
 
-                Console.Write("\n");
-                Console.WriteLine("Total winner: {0}", result.WinnerMax.Text);
+                    Console.Write("\n");
+                    foreach (var item in result.WinnerList)
+                    {
+                        Console.WriteLine("{0} winner: {1}", item.SearcherName, item.Text);
+                    }
+
+                    Console.Write("\n");
+                    Console.WriteLine("Total winner: {0}", result.WinnerMax.Text);
+                }
             }
             else
             {

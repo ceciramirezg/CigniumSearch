@@ -31,23 +31,34 @@ namespace Cigninum.Search.Distribution.Core.Result
 
             foreach (var item in searchers)
             {
-                listResult.AddRange(await search.SearchLanguage(listText, item));
-            }            
+                var searcherResult = await search.SearchLanguage(listText, item);
 
-            foreach (var item in listText)
-            {
-                var maxTotal = listResult.Where(s => s.Text == item).Max(s => s.Total);
-                var maxObject = listResult.Where(s => s.Total == maxTotal).FirstOrDefault();
-
-                winnerList.Add(new Winner { SearcherName = maxObject.Searcher, Text = item, Total = maxObject.Total });
+                if (searcherResult.Count > 0)
+                {
+                    listResult.AddRange(searcherResult);
+                }               
             }
 
-            var winnerMaxTotal = winnerList.Max(w => w.Total);
-            var winnerMaxObject = winnerList.Where(w => w.Total == winnerMaxTotal).FirstOrDefault();
+            if (listResult.Count > 0)
+            {
+                foreach (var item in listText)
+                {
+                    if (!string.IsNullOrWhiteSpace(item))
+                    {
+                        var maxTotal = listResult.Where(s => s.Text == item).Max(s => s.Total);
+                        var maxObject = listResult.Where(s => s.Total == maxTotal).FirstOrDefault();
 
-            model.SearchLanguageList = listResult;
-            model.WinnerList = winnerList;
-            model.WinnerMax = winnerMaxObject;
+                        winnerList.Add(new Winner { SearcherName = maxObject.Searcher, Text = item, Total = maxObject.Total });
+                    }
+                }
+
+                var winnerMaxTotal = winnerList.Max(w => w.Total);
+                var winnerMaxObject = winnerList.Where(w => w.Total == winnerMaxTotal).FirstOrDefault();
+
+                model.SearchLanguageList = listResult;
+                model.WinnerList = winnerList;
+                model.WinnerMax = winnerMaxObject;
+            }            
            
             return model;
         }

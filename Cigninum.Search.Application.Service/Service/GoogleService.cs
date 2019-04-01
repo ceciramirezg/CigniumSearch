@@ -1,14 +1,11 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-using System.Net.Http;
+﻿using Cigninum.Search.Application.TransferObject.Configuration;
+using Cigninum.Search.Application.TransferObject.Response;
 using Cigninum.Search.Cross.Core.Configuration;
 using Cigninum.Search.Cross.Core.Exception;
 using Cigninum.Search.Cross.Core.Util;
-using Cigninum.Search.Application.TransferObject.Configuration;
-using Cigninum.Search.Application.TransferObject.Response;
+using System;
+using System.Net.Http;
+using System.Threading.Tasks;
 
 namespace Cigninum.Search.Application.Service
 {

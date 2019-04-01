@@ -1,6 +1,7 @@
 ﻿using Cigninum.Search.Application.TransferObject.Response;
 using Cigninum.Search.Cross.Core.Configuration;
 using Cigninum.Search.Cross.Core.Constant;
+using Cigninum.Search.Cross.Core.Exception;
 using System;
 using System.Collections.Generic;
 using System.Threading.Tasks;
@@ -26,14 +27,22 @@ namespace Cigninum.Search.Application.Service
              
                 foreach (string item in listText)
                 {
-                    var result = new SearchLanguageResponse
+                    if (!string.IsNullOrWhiteSpace(item))
                     {
-                        Searcher = searcherName,
-                        Text = item,
-                        Total = await service.GetTotal(item, searcherName)
-                    };
+                        var result = new SearchLanguageResponse
+                        {
+                            Searcher = searcherName,
+                            Text = item,
+                            Total = await service.GetTotal(item, searcherName)
+                        };
 
-                    searchList.Add(result);
+                        searchList.Add(result);
+                    }
+                    else
+                    {
+                       new ApplicationLayerException<GoogleService>(string.Concat("No valid language ", item,"has been entered to search in ", searcherName, "."));
+                      
+                    }
                 }
             }          
 
